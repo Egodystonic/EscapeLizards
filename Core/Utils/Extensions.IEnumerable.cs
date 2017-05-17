@@ -1,0 +1,468 @@
+﻿// All code copyright (c) 2014 Ophidian Games || http://www.ophidian-games.com
+// See http://www.losgap.com/ for licensing information
+// Created on 06 10 2014 at 14:12 by Ben Bowen
+
+using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Ophidian.Losgap {
+	public static partial class Extensions {
+		public static TSource FindSingleOrDefault<TSource>(this IEnumerable<TSource> @this, Func<TSource, bool> searchFunc) {
+			bool foundOne = false;
+			TSource foundElement = default(TSource);
+			foreach (var e in @this) {
+				if (searchFunc(e)) {
+					if (foundOne) return default(TSource);
+					foundOne = true;
+					foundElement = e;
+				}
+			}
+
+			if (foundOne) return foundElement;
+			return default(TSource);
+		}
+
+		/// <summary>
+		/// Performs the given action with each element in the collection.
+		/// </summary>
+		/// <remarks>
+		/// This method performs the action immediately, and will force any lazy evaluation to happen. Essentially, the 
+		/// <paramref name="action"/> will be executed for each <typeparamref name="TSource"/> as soon as the call to this
+		/// function is made.
+		/// </remarks>
+		/// <typeparam name="TSource">The collection's element type.</typeparam>
+		/// <param name="this">The extended IEnumerable.</param>
+		/// <param name="action">The action to perform with each element.</param>
+		/// <returns>Returns the same collection that this method was called on, to allow method chaining.</returns>
+		public static IEnumerable<TSource> ForEach<TSource>(this IEnumerable<TSource> @this, Action<TSource> action) {
+			if (@this == null) throw new ArgumentNullException("this", "ForEach called on a null IEnumerable.");
+			if (action == null) throw new ArgumentNullException("action");
+
+			foreach (TSource element in @this) action(element);
+			return @this;
+		}
+
+		/// <summary>
+		/// Performs the given action with each element in the collection; and provides the 0-based index of each element in the order
+		/// they are iterated over.
+		/// </summary>
+		/// <remarks>
+		/// This method performs the action immediately, and will force any lazy evaluation to happen. Essentially, the 
+		/// <paramref name="action"/> will be executed for each <typeparamref name="TSource"/> as soon as the call to this
+		/// function is made.
+		/// </remarks>
+		/// <typeparam name="TSource">The collection's element type.</typeparam>
+		/// <param name="this">The extended IEnumerable.</param>
+		/// <param name="action">The action to perform with each element and its index.</param>
+		/// <returns>Returns the same collection that this method was called on, to allow method chaining.</returns>
+		public static IEnumerable<TSource> ForEach<TSource>(this IEnumerable<TSource> @this, Action<TSource, int> action) {
+			if (@this == null) throw new ArgumentNullException("this", "ForEach called on a null IEnumerable.");
+			if (action == null) throw new ArgumentNullException("action");
+
+			int index = 0;
+			foreach (TSource element in @this) action(element, index++);
+			return @this;
+		}
+
+		/// <summary>
+		/// Counts the number of times each element appears in a collection, and returns a 
+		/// <see cref="IDictionary{T, V}">dictionary</see>; where each key is an element and its value is the number of
+		/// times that element appeared in the source collection.
+		/// </summary>
+		/// <param name="this">The extended IEnumerable{T}.</param>
+		/// <returns>A dictionary of elements mapped to the number of times they appeared in <paramref name="this"/>.</returns>
+		public static IDictionary<T, int> CountInstances<T>(this IEnumerable<T> @this) {
+			if (@this == null) throw new ArgumentNullException("this", "CountInstances called on a null IEnumerable<T>.");
+
+			IDictionary<T, int> result = new Dictionary<T, int>();
+			// ReSharper disable once CompareNonConstrainedGenericWithNull No issues will arise if T is not nullable
+			foreach (T element in @this.Where(t => t != null)) {	
+				if (result.ContainsKey(element)) ++result[element];
+				else result[element] = 1;
+			}
+			
+			return result;
+		}
+
+		/// <summary>
+		/// Builds a string that shows every element in the target collection.
+		/// </summary>
+		/// <param name="this">The extended IEnumerable{T}.</param>
+		/// <param name="elementToStringFunc">The function that converts a given element to a string. If left null, 
+		/// element.ToString() will be used.</param>
+		/// <returns>A string in the format: <c>"{Dog x4, Cat x2, Lizard x6}"</c>.</returns>
+		public static string ToStringOfContents<T>(this IEnumerable<T> @this, Func<T, string> elementToStringFunc = null) {
+			if (@this == null) throw new ArgumentNullException("this", "ToStringOfContents called on a null IEnumerable<T>.");
+
+			if (elementToStringFunc == null) elementToStringFunc = element => element.ToString();
+
+			StringBuilder resultBuilder = new StringBuilder();
+			resultBuilder.Append('{');
+
+			var instanceCounts = @this.CountInstances();
+
+			if (instanceCounts.All(kvp => kvp.Value == 1)) {
+				instanceCounts.ForEach(element => {
+					resultBuilder.Append(elementToStringFunc(element.Key));
+					resultBuilder.Append(", ");
+				});
+			}
+			else {
+				instanceCounts.ForEach(element => {
+					resultBuilder.Append(elementToStringFunc(element.Key));
+					resultBuilder.Append(" x");
+					resultBuilder.Append(element.Value);
+					resultBuilder.Append(", ");
+				});
+			}
+
+			
+			return resultBuilder.ToString().TrimEnd(',', ' ') + '}';
+		}
+
+		/// <summary>
+		/// Returns a subsequence of the subject collection.
+		/// </summary>
+		/// <param name="this">The extended IEnumerable.</param>
+		/// <param name="firstElementIndexInc">The index of the first element in the collection that will begin the new subsequence. A value of
+		/// <c>0</c> will result in all elements from the start of the sequence to <paramref name="lastElementIndexEx"/> becoming part
+		/// of the resultant subsequence.</param>
+		/// <param name="lastElementIndexEx">The index of the first element in the collection after the end the new subsequence. Any value
+		/// greater than the number of elements in the sequence will result in all elements from <paramref name="firstElementIndexInc"/> onwards
+		/// becoming part of the resultant subsequence.</param>
+		/// <returns>Returns a new IEnumerable that contains only the elements specified by the subsequence parameters.</returns>
+		public static IEnumerable<TSource> Subsequence<TSource>(this IEnumerable<TSource> @this, int firstElementIndexInc = 0, int lastElementIndexEx = Int32.MaxValue) {
+			if (@this == null) throw new ArgumentNullException("this", "Subsequence called on a null IEnumerable<TSource>.");
+			
+			return @this.Where((item, i) => i >= firstElementIndexInc && i < lastElementIndexEx);
+		}
+
+		/// <summary>
+		/// Determines whether or not the given sequence contains any duplicate elements.
+		/// </summary>
+		/// <param name="this">The extended <see cref="IEnumerable{T}"/>.</param>
+		/// <returns>True if the sequence contains duplicate elements, false if not.</returns>
+		public static bool AnyDuplicates<T>(this IEnumerable<T> @this) {
+			if (@this == null) throw new ArgumentNullException("this", "AnyDuplicates<T> called on a null IEnumerable<T>.");
+			return AnyRelationship(@this, (arg1, arg2) => arg1.Equals(arg2));
+		}
+
+		/// <summary>
+		/// Determines whether or not a given relationship exists between any two elements in the sequence.
+		/// </summary>
+		/// <param name="this">The extended <see cref="IEnumerable{T}"/>.</param>
+		/// <param name="relationshipFunc">The function that determines whether the given relationship exists
+		/// between two elements.</param>
+		/// <returns>True if the relationship exists between any two elements, false if not.</returns>
+		public static bool AnyRelationship<T>(this IEnumerable<T> @this, Func<T, T, bool> relationshipFunc) {
+			if (@this == null) throw new ArgumentNullException("this", "AnyRelationship called on a null IEnumerable<T>.");
+
+			return @this.Select((a, aIndex) => @this.Skip(aIndex + 1).Any(b => relationshipFunc(a, b) || relationshipFunc(b, a))).Any(value => value);
+		}
+
+		/// <summary>
+		/// Counts how many pairs of elements in the source sequence share the relationship defined by <paramref name="relationshipFunc"/>.
+		/// </summary>
+		/// <param name="this">The extended IEnumerable{T}.</param>
+		/// <param name="relationshipFunc">The function that determines whether the given relationship exists
+		/// between two elements.</param>
+		/// <returns>The number of pairs found.</returns>
+		public static int CountRelationship<T>(this IEnumerable<T> @this, Func<T, T, bool> relationshipFunc) {
+			if (@this == null) throw new ArgumentNullException("this", "CountRelationship called on a null IEnumerable<T>.");
+
+			return @this.Select((a, aIndex) => @this.Skip(aIndex + 1).Any(b => relationshipFunc(a, b) || relationshipFunc(b, a))).Count(value => value);
+		}
+
+		/// <summary>
+		/// Returns the first two items to in the source collection that satisfy the given <paramref name="relationshipFunc"/>,
+		/// or <c>null</c> if no match was found.
+		/// </summary>
+		/// <param name="this">The extended IEnumerable{T}.</param>
+		/// <param name="relationshipFunc">The function that determines whether the given relationship exists
+		/// between two elements.</param>
+		/// <returns>A tuple of the first two elements that match the given relationship, or <c>null</c> if
+		/// no such relationship exists.</returns>
+		public static KeyValuePair<T, T>? FirstRelationship<T>(this IEnumerable<T> @this, Func<T, T, bool> relationshipFunc) {
+			if (@this == null) throw new ArgumentNullException("this", "FirstRelationship called on a null IEnumerable<T>.");
+			if (relationshipFunc == null) throw new ArgumentNullException("relationshipFunc");
+
+			int aIndex = 0;
+			foreach (T a in @this) {
+				foreach (T b in @this.Skip(++aIndex)) {
+					if (relationshipFunc(a, b) || relationshipFunc(b, a)) return new KeyValuePair<T, T>(a, b);
+				}
+			}
+
+			return null;
+		}
+
+		/// <summary>
+		/// Returns all combinations of items in the source collection that satisfy the given <paramref name="relationshipFunc"/>.
+		/// </summary>
+		/// <param name="this">The extended IEnumerable{T}.</param>
+		/// <param name="relationshipFunc">The function that determines whether the given relationship exists
+		/// between two elements.</param>
+		/// <returns>An enumeration of all combinations of items that satisfy the <paramref name="relationshipFunc"/>.
+		/// Each combination will only be returned once (e.g. <c>[a, b]</c> but not <c>[b, a]</c>).</returns>
+		public static IEnumerable<KeyValuePair<T, T>> WhereRelationship<T>(this IEnumerable<T> @this, Func<T, T, bool> relationshipFunc) {
+			if (@this == null) throw new ArgumentNullException("this", "WhereRelationship called on a null IEnumerable<T>.");
+
+			int aIndex = 0;
+			foreach (T a in @this) {
+				foreach (T b in @this.Skip(++aIndex)) {
+					if (relationshipFunc(a, b) || relationshipFunc(b, a)) yield return new KeyValuePair<T, T>(a, b);
+				}
+			}
+		}
+
+		/// <summary>
+		/// Returns whether or not there are at least <paramref name="minInstances"/> elements in the source sequence
+		/// that satisfy the given <paramref name="predicate"/>.
+		/// </summary>
+		/// <param name="this">The extended IEnumerable{T}.</param>
+		/// <param name="minInstances">The number of elements that must satisfy the <paramref name="predicate"/>.</param>
+		/// <param name="predicate">The function that determines whether or not an element is counted.</param>
+		/// <returns>
+		/// This method will immediately return true upon finding the <paramref name="minInstances"/>th element 
+		/// that satisfies the predicate, or if <paramref name="minInstances"/> is 0. Otherwise, if <paramref name="minInstances"/>
+		/// is greater than the size of the source sequence, or less than <paramref name="minInstances"/> elements are found
+		/// to match the <paramref name="predicate"/>, it will return false.
+		/// </returns>
+		public static bool AtLeast<T>(this IEnumerable<T> @this, ulong minInstances, Func<T, bool> predicate) {
+			if (@this == null) throw new ArgumentNullException("this", "AtLeast called on a null IEnumerable<>.");
+			if (predicate == null) throw new ArgumentNullException("predicate");
+
+			if (minInstances == 0) return true;
+
+			ulong numInstSoFar = 0;
+			return @this.Any(element => predicate(element) && ++numInstSoFar == minInstances);
+		}
+
+		/// <summary>
+		/// Ascertains whether there are no more than <paramref name="maxInstances"/> elements in the source sequence
+		/// that satisfy the given <paramref name="predicate"/>.
+		/// </summary>
+		/// <param name="this">The extended IEnumerable{T}.</param>
+		/// <param name="maxInstances">The maximum number of elements that can satisfy the <paramref name="predicate"/>.</param>
+		/// <param name="predicate">The function that determines whether or not an element is counted.</param>
+		/// <returns>
+		/// This method will immediately return false upon finding the (<paramref name="maxInstances"/> + 1)th element 
+		/// that satisfies the predicate. Otherwise, if <paramref name="maxInstances"/>
+		/// is greater than the size of the source sequence, or less than <paramref name="maxInstances"/> elements are found
+		/// to match the <paramref name="predicate"/>, it will return true.
+		/// </returns>
+		public static bool AtMost<T>(this IEnumerable<T> @this, ulong maxInstances, Func<T, bool> predicate) {
+			if (@this == null) throw new ArgumentNullException("this", "AtMost called on a null IEnumerable<>.");
+			if (predicate == null) throw new ArgumentNullException("predicate");
+
+
+			ulong numInstSoFar = 0;
+			return @this.All(element => !predicate(element) || ++numInstSoFar <= maxInstances);
+		}
+
+		/// <summary>
+		/// Removes the items that match the <paramref name="predicate"/> from the given collection.
+		/// </summary>
+		/// <param name="this">The extended IEnumerable{T}.</param>
+		/// <param name="predicate">A selection function that returns <c>true</c> for the input if the input should be removed
+		/// from <paramref name="this"/>.</param>
+		/// <returns>A collection containing all removed elements.</returns>
+		public static IEnumerable<T> RemoveWhere<T>(this ICollection<T> @this, Func<T, bool> predicate) {
+			if (@this == null) throw new ArgumentNullException("this", "RemoveWhere called on a null IEnumerable<T>.");
+
+			IEnumerable<T> toBeRemoved = @this.Where(predicate).ToList();	// ToList required or else it lazily-evaluates, 
+																			// resulting in concurrent modification issues
+			foreach (T itemToBeRemoved in toBeRemoved) {
+				@this.Remove(itemToBeRemoved);
+			}
+
+			return toBeRemoved;
+		}
+
+		/// <summary>
+		/// Flattens the collection of enumerables of type <typeparamref name="T"/> into a single collection.
+		/// </summary>
+		/// <param name="this">The extended IEnumerable&lt;<see cref="IEnumerable{T}"/>&gt;.</param>
+		/// <returns>An enumeration of all elements in all the enumerated collections.</returns>
+		public static IEnumerable<T> Flatten<T>(this IEnumerable<IEnumerable<T>> @this) {
+			if (@this == null) throw new ArgumentNullException("this", "Flatten called on a null IEnumerable<IEnumerable<T>>.");
+			return @this.SelectMany(containingCollection => containingCollection);
+		}
+
+		/// <summary>
+		/// Gets the value in the dictionary with the given <paramref name="key"/> if it exists.
+		/// If the key does not exist, it will be added with value returned from the <paramref name="valueCreator"/> function,
+		/// and that value will be returned.
+		/// </summary>
+		/// <param name="this">The extended IDictionary{TKey, TValue}.</param>
+		/// <param name="key">The key whose value it is you wish to retrieve/add.</param>
+		/// <param name="valueCreator">A function that is only called if no such key '<paramref name="key"/>' already
+		/// exists in <paramref name="this"/>. The only input parameter is the given <paramref name="key"/>.
+		/// The value returned from the function is added to the dictionary with the
+		/// given <paramref name="key"/>.</param>
+		/// <returns>The pre-existing value if there was one, or the value returned by <paramref name="valueCreator"/> if not.</returns>
+		public static TValue GetOrCreate<TKey, TValue>(this IDictionary<TKey, TValue> @this, TKey key, Func<TKey, TValue> valueCreator) {
+			if (@this == null) throw new ArgumentNullException("this", "GetOrCreate called on a null IDictionary<TKey, TValue>.");
+			if (valueCreator == null) throw new ArgumentNullException("valueCreator");
+
+			if (!@this.ContainsKey(key)) @this.Add(key, valueCreator(key));
+			return @this[key];
+		}
+
+		public static TValue ValueOrDefault<TKey, TValue>(this IDictionary<TKey, TValue> @this, TKey key, Func<TKey, TValue> valueCreator = null) {
+			if (@this == null) throw new ArgumentNullException("this", "GetOrCreate called on a null IDictionary<TKey, TValue>.");
+
+			if (@this.ContainsKey(key)) return @this[key];
+			else if (valueCreator == null) return default(TValue);
+			else return valueCreator(key);
+		}
+
+		/// <summary>
+		/// Concatenates a single extra <paramref name="element"/> in to the source enumerable.
+		/// </summary>
+		/// <param name="this">The extended IEnumerable{T}.</param>
+		/// <param name="element">The element to concatenate on to the end of the source enumerable.</param>
+		/// <returns>A new enumerable that is the <paramref name="this"/> concatenated with <paramref name="element"/>.</returns>
+		public static IEnumerable<T> Concat<T>(this IEnumerable<T> @this, T element) {
+			if (@this == null) throw new ArgumentNullException("this", "Concat called on a null IEnumerable<T>.");
+
+			return Enumerable.Concat(@this, new[] { element });
+		}
+
+		/// <summary>
+		/// Removes a single <paramref name="element"/> from the source enumerable.
+		/// </summary>
+		/// <param name="this">The extended IEnumerable{T}.</param>
+		/// <param name="element">The element to remove from the source enumerable.</param>
+		/// <returns>A new enumerable that is the <paramref name="this"/>, except <paramref name="element"/>.</returns>
+		public static IEnumerable<T> Except<T>(this IEnumerable<T> @this, T element) {
+			if (@this == null) throw new ArgumentNullException("this", "Concat called on a null IEnumerable<T>.");
+
+			return Enumerable.Except(@this, new[] { element });
+		}
+
+		/// <summary>
+		/// Concatenates the given <paramref name="elements"/> in to the source enumerable.
+		/// </summary>
+		/// <param name="this">The extended IEnumerable{T}.</param>
+		/// <param name="elements">The elements to concatenate on to the end of the source enumerable.</param>
+		/// <returns>A new enumerable that is the <paramref name="this"/> concatenated with <paramref name="elements"/>.</returns>
+		public static IEnumerable<T> Concat<T>(this IEnumerable<T> @this, params T[] elements) {
+			if (@this == null) throw new ArgumentNullException("this", "Concat called on a null IEnumerable<T>.");
+
+			return Enumerable.Concat(@this, elements);
+		}
+
+		/// <summary>
+		/// Removes the given <paramref name="elements"/> from the source enumerable.
+		/// </summary>
+		/// <param name="this">The extended IEnumerable{T}.</param>
+		/// <param name="elements">The elements to remove from the source enumerable.</param>
+		/// <returns>A new enumerable that is the <paramref name="this"/>, except <paramref name="elements"/>.</returns>
+		public static IEnumerable<T> Except<T>(this IEnumerable<T> @this, params T[] elements) {
+			if (@this == null) throw new ArgumentNullException("this", "Except called on a null IEnumerable<T>.");
+
+			return Enumerable.Except(@this, elements);
+		}
+
+		public static IEnumerable<T> Except<T>(this IEnumerable<T> @this, Func<T, bool> predicate) {
+			if (@this == null) throw new ArgumentNullException("this", "Except called on a null IEnumerable<T>.");
+
+			return @this.Where(o => !predicate(o));
+		}
+
+		public static void Replace<T>(this IList<T> @this, T existing, T replacement) {
+			if (@this == null) throw new ArgumentNullException("this", "Replace called on a null IEnumerable<T>.");
+			
+			@this.InsertAt(existing, replacement);
+			@this.Remove(existing);
+		}
+
+		public static void InsertAt<T>(this IList<T> @this, T indexObject, T elementToInsert) {
+			if (@this == null) throw new ArgumentNullException("this", "InsertAt called on a null IEnumerable<T>.");
+			
+#if DEBUG
+			int index = @this.IndexOf(indexObject);
+			Assure.GreaterThanOrEqualTo(index, 0, "'IndexObject' element is not actually in list 'this'.");
+			@this.Insert(index, elementToInsert);
+#else
+			@this.Insert(@this.IndexOf(indexObject), elementToInsert);
+#endif
+		}
+
+		public static void CopyTo<T>(this ICollection<T> @this, ICollection<T> other) {
+			if (@this == null) throw new ArgumentNullException("this", "CopyTo called on a null IEnumerable<T>.");
+			if (ReferenceEquals(@this, other)) {
+				T[] copyArr = new T[@this.Count];
+				int i = 0;
+				foreach (T element in @this) copyArr[i++] = element;
+				for (i = 0; i < copyArr.Length; ++i) other.Add(copyArr[i]);
+			}
+			else {
+				foreach (T element in @this) other.Add(element);
+			}
+		}
+
+		public static IEnumerable<T> Copy<T>(this IEnumerable<T> @this) {
+			if (@this == null) throw new ArgumentNullException("this", "Copy called on a null IEnumerable<T>.");
+			foreach (T element in @this) yield return element;
+		}
+
+		public static T PopFirst<T>(this ICollection<T> @this) {
+			T result = @this.First();
+			@this.Remove(result);
+			return result;
+		}
+
+		public static T PopLast<T>(this ICollection<T> @this) {
+			T result = @this.Last();
+			@this.Remove(result);
+			return result;
+		}
+
+		public static int IndexOf<T>(this T[] @this, T item) {
+			return Array.IndexOf(@this, item);
+		}
+
+		public static V Pop<K, V>(this IDictionary<K, V> @this, K key) {
+			V result = @this[key];
+			@this.Remove(key);
+			return result;
+		}
+
+		public static TSource MinProperty<TSource, TComparable>(this IEnumerable<TSource> @this, Func<TSource, TComparable> comparerFunc) where TComparable : IComparable {
+			return @this.OrderBy(comparerFunc).First();
+		}
+
+		public static TSource MaxProperty<TSource, TComparable>(this IEnumerable<TSource> @this, Func<TSource, TComparable> comparerFunc) where TComparable : IComparable {
+			return @this.OrderByDescending(comparerFunc).First();
+		}
+
+		public static TValue GetNoBoxing<TKey, TValue>(this Dictionary<TKey, TValue> @this, TKey key) where TKey : struct, IEquatable<TKey> {
+			return @this[key];
+			//foreach (KeyValuePair<TKey, TValue> kvp in @this) {
+			//	if (kvp.Key.Equals(key)) return kvp.Value;
+			//}
+			//throw new KeyNotFoundException();
+		}
+
+		public static IEnumerable<TSource> Distinct<TSource>(this IEnumerable<TSource> @this, Func<TSource, TSource, bool> equalityComparer) {
+			List<TSource> resultList = new List<TSource>();
+
+			foreach (var item in @this) {
+				bool distinct = true;
+				foreach (var alreadyAdded in resultList) {
+					if (equalityComparer(item, alreadyAdded)) {
+						distinct = false;
+						break;
+					}
+				}
+				if (distinct) resultList.Add(item);
+			}
+
+			return resultList;
+		}
+	}
+}

@@ -1,0 +1,48 @@
+# SEL level file
+# comment Line
+
+# level author example:
+# letter "A" author :: author name
+A::Zord
+
+# level name example:
+# letter "N" mapName ::  map name
+N::Super Cool First Level
+
+# geometry example:
+# letter "G" geometry :: type of geometry :: size X Y Z :: position X Y Z :: (optional)texture :: (optional)movementspeed :: (optional)movementroutine points (1,2,3,...)
+G::cube::0.5 0.8 2.0::3.0 10.0 -2.0::texture.png::10.5::3.0 10.0 -2.0,4.0 10.0 -2.0,5.0 10 -2.0, 3.0 10.0 -2.0
+G::sphere::2.1 0.5 2.4::1.5 1.5 4.5::texture.png::::
+G::cylinder::2.1 2.2 5.4::-4.0 -1.5 -4.5::::::
+G::plane::2.0 4.0::-10.5 -10.5 -10.5::texture.png::::
+
+# model example
+# letter "M" model :: modelfile :: size X Y Z :: position X Y Z :: (optional)texture :: (optional)movementspeed :: (optional)movementroutine points (1,2,3,...)
+M::bestmodelever.obj::3.0 3.0 3.0::0.5 -0.5 0.5::texture.png::3::0.5 -0.5 0.5,1.0 -0.5 0.5
+M::lizard.obj::3.0 3.0 3.0::0.5 -0.5 0.5::texture.png::::
+
+# spawn example - only one.
+# letter "S" spawn :: spawn point
+S::0.0 0.0 0.0
+
+# finish example - can be multiple areas.
+# letter "F" finish area (cube) ::  size X Y Z :: position X Y Z :: (optional)required condition,conditionamount/type/ID
+F::4.5 4.5 4.5::20.5 22.0 10.5::coin 10,key 1
+F::0.5 3.5 -3.5::-20.5 -22.0 -0.5::coin 5,key 3
+
+# pickup / optional goal / "coins" example:
+# letter "P" pickup ::  type of pickup :: amount of items in case of coins, or ID in case of special item :: size X Y Z :: position X Y Z
+P::coin::1::2.0 2.0 2.0::-5.4 5.0 0.1
+P::coin::1::2.0 2.0 2.0::-4.4 5.0 0.1
+P::coin::1::2.0 2.0 2.0::-3.4 5.0 0.1
+P::coin::1::2.0 2.0 2.0::-2.4 5.0 0.1
+P::key::3::2.0 2.0 2.0::2.0 5.0 0.5
+
+# demo file end
+
+#####
+<Motig_>I think you might find it easier to do G { shape:cube, size: 3 4 5, etc }
+<Zordon>okay :o
+<Motig_>Well otherwise you have to remember this ever-growing list of random things
+<Motig_>size::position::rotation::texture::texturescale::movement::etc
+<Motig_>Either way, as long as you write the save/load function well enough it should be easy to alter as we go along :)

@@ -1,0 +1,21 @@
+﻿  compilation object save succeeded; see D:\Documents\Ophidian\Repositories\Losgap\TestDir\Inst\DLGeometryFS.cso
+  compilation object save succeeded; see D:\Documents\Ophidian\Repositories\Losgap\TestDir\Inst\DLGeometryVS.cso
+  compilation object save succeeded; see D:\Documents\Ophidian\Repositories\Losgap\TestDir\Inst\HUDFS.cso
+  compilation object save succeeded; see D:\Documents\Ophidian\Repositories\Losgap\TestDir\Inst\HUDVS.cso
+  compilation object save succeeded; see D:\Documents\Ophidian\Repositories\Losgap\TestDir\Inst\UnlitVSSky.cso
+  compilation object save succeeded; see D:\Documents\Ophidian\Repositories\Losgap\TestDir\Inst\DLLightingFS.cso
+  compilation object save succeeded; see D:\Documents\Ophidian\Repositories\Losgap\TestDir\Inst\DLLightingVS.cso
+  compilation object save succeeded; see D:\Documents\Ophidian\Repositories\Losgap\TestDir\Inst\Tests\SimpleFS.cso
+  compilation object save succeeded; see D:\Documents\Ophidian\Repositories\Losgap\TestDir\Inst\Tests\SimpleVS.cso
+  compilation object save succeeded; see D:\Documents\Ophidian\Repositories\Losgap\TestDir\Inst\UnlitFS.cso
+  compilation object save succeeded; see D:\Documents\Ophidian\Repositories\Losgap\TestDir\Inst\UnlitVS.cso
+  WindowHandle.cpp
+  WindowFactory.cpp
+  ShaderManager.cpp
+  ResourceFactory.cpp
+  RenderPassManager.cpp
+  DeviceFactory.cpp
+  ContextFactory.cpp
+  Generating Code...
+     Creating library D:\Documents\Ophidian\Repositories\Losgap\Output\32-Bit\Development\RenderingNative.lib and object D:\Documents\Ophidian\Repositories\Losgap\Output\32-Bit\Development\RenderingNative.exp
+  RenderingNative.vcxproj -> D:\Documents\Ophidian\Repositories\Losgap\Output\32-Bit\Development\RenderingNative.dll

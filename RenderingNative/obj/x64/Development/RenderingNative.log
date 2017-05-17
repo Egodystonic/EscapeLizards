@@ -1,0 +1,21 @@
+﻿  compilation object save succeeded; see D:\Documents\Ophidian\Repositories\Losgap\TestDir\Inst\DefaultFS.cso
+  compilation object save succeeded; see D:\Documents\Ophidian\Repositories\Losgap\TestDir\Inst\DefaultVS.cso
+  compilation object save succeeded; see D:\Documents\Ophidian\Repositories\Losgap\TestDir\Inst\Tests\SimpleFS.cso
+  compilation object save succeeded; see D:\Documents\Ophidian\Repositories\Losgap\TestDir\Inst\Tests\SimpleVS.cso
+  WindowHandle.cpp
+  WindowFactory.cpp
+  ShaderManager.cpp
+  ResourceFactory.cpp
+  RenderPassManager.cpp
+  DeviceFactory.cpp
+  ContextFactory.cpp
+  Generating Code...
+  DirectXTK.lib(WICTextureLoader.obj) : MSIL .netmodule or module compiled with /GL found; restarting link with /LTCG; add /LTCG to the link command line to improve linker performance
+LINK : warning LNK4075: ignoring '/INCREMENTAL' due to '/LTCG' specification
+DirectXTK.lib(WICTextureLoader.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in ContextFactory.obj
+DirectXTK.lib(WICTextureLoader.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MD_DynamicRelease' doesn't match value 'MDd_DynamicDebug' in ContextFactory.obj
+DirectXTK.lib(pch.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in ContextFactory.obj
+DirectXTK.lib(pch.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MD_DynamicRelease' doesn't match value 'MDd_DynamicDebug' in ContextFactory.obj
+     Creating library D:\Documents\Ophidian\Repositories\Losgap\Output\64-Bit\Development\RenderingNative.lib and object D:\Documents\Ophidian\Repositories\Losgap\Output\64-Bit\Development\RenderingNative.exp
+LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
+D:\Documents\Ophidian\Repositories\Losgap\Output\64-Bit\Development\RenderingNative.dll : fatal error LNK1319: 4 mismatches detected

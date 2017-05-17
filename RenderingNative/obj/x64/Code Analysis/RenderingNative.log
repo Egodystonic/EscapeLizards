@@ -1,0 +1,14 @@
+﻿  compilation object save succeeded; see D:\Documents\Ophidian\Repositories\Losgap\TestDir\Inst\DefaultFS.cso
+  compilation object save succeeded; see D:\Documents\Ophidian\Repositories\Losgap\TestDir\Inst\DefaultVS.cso
+  ContextFactory.cpp
+  DeviceFactory.cpp
+  RenderPassManager.cpp
+  ResourceFactory.cpp
+  ShaderManager.cpp
+  WindowFactory.cpp
+  WindowHandle.cpp
+  Running Code Analysis for C/C++...
+     Creating library D:\Documents\Ophidian\Repositories\Losgap\Output\64-Bit\Code Analysis\RenderingNative.lib and object D:\Documents\Ophidian\Repositories\Losgap\Output\64-Bit\Code Analysis\RenderingNative.exp
+  Generating code
+  Finished generating code
+  RenderingNative.vcxproj -> D:\Documents\Ophidian\Repositories\Losgap\Output\64-Bit\Code Analysis\RenderingNative.dll

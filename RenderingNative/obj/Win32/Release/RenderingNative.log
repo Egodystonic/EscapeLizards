@@ -1,0 +1,38 @@
+﻿  compilation object save succeeded; see D:\Documents\Ophidian\Repositories\EscapeLizards\TestDir\Inst\BloomH.cso
+  compilation object save succeeded; see D:\Documents\Ophidian\Repositories\EscapeLizards\TestDir\Inst\BloomV.cso
+  compilation object save succeeded; see D:\Documents\Ophidian\Repositories\EscapeLizards\TestDir\Inst\Blur.cso
+  compilation object save succeeded; see D:\Documents\Ophidian\Repositories\EscapeLizards\TestDir\Inst\Copy.cso
+  compilation object save succeeded; see D:\Documents\Ophidian\Repositories\EscapeLizards\TestDir\Inst\CopyReverse.cso
+  compilation object save succeeded; see D:\Documents\Ophidian\Repositories\EscapeLizards\TestDir\Inst\DLFinalFS.cso
+  compilation object save succeeded; see D:\Documents\Ophidian\Repositories\EscapeLizards\TestDir\Inst\DLGeometryFS.cso
+  compilation object save succeeded; see D:\Documents\Ophidian\Repositories\EscapeLizards\TestDir\Inst\DLGeometryFSSky.cso
+  compilation object save succeeded; see D:\Documents\Ophidian\Repositories\EscapeLizards\TestDir\Inst\DLGeometryVS.cso
+D:\Documents\Ophidian\Repositories\EscapeLizards\TestDir\Inst\DLGeometryVSSky.hlsl(19,11-24): warning X3578: Output value 'main' is not completely initialized
+  
+  compilation object save succeeded; see D:\Documents\Ophidian\Repositories\EscapeLizards\TestDir\Inst\DLGeometryVSSky.cso
+  compilation object save succeeded; see D:\Documents\Ophidian\Repositories\EscapeLizards\TestDir\Inst\DoF.cso
+  compilation object save succeeded; see D:\Documents\Ophidian\Repositories\EscapeLizards\TestDir\Inst\Glow.cso
+  compilation object save succeeded; see D:\Documents\Ophidian\Repositories\EscapeLizards\TestDir\Inst\HUDFS.cso
+  compilation object save succeeded; see D:\Documents\Ophidian\Repositories\EscapeLizards\TestDir\Inst\HUDFSText.cso
+  compilation object save succeeded; see D:\Documents\Ophidian\Repositories\EscapeLizards\TestDir\Inst\HUDVS.cso
+  compilation object save succeeded; see D:\Documents\Ophidian\Repositories\EscapeLizards\TestDir\Inst\Outliner.cso
+  compilation object save succeeded; see D:\Documents\Ophidian\Repositories\EscapeLizards\TestDir\Inst\ShadowFS.cso
+  compilation object save succeeded; see D:\Documents\Ophidian\Repositories\EscapeLizards\TestDir\Inst\ShadowVS.cso
+  compilation object save succeeded; see D:\Documents\Ophidian\Repositories\EscapeLizards\TestDir\Inst\UnlitVSSky.cso
+  compilation object save succeeded; see D:\Documents\Ophidian\Repositories\EscapeLizards\TestDir\Inst\DLLightingFS.cso
+  compilation object save succeeded; see D:\Documents\Ophidian\Repositories\EscapeLizards\TestDir\Inst\DLLightingVS.cso
+  compilation object save succeeded; see D:\Documents\Ophidian\Repositories\EscapeLizards\TestDir\Inst\Tests\SimpleFS.cso
+  compilation object save succeeded; see D:\Documents\Ophidian\Repositories\EscapeLizards\TestDir\Inst\Tests\SimpleVS.cso
+  compilation object save succeeded; see D:\Documents\Ophidian\Repositories\EscapeLizards\TestDir\Inst\UnlitFS.cso
+  compilation object save succeeded; see D:\Documents\Ophidian\Repositories\EscapeLizards\TestDir\Inst\UnlitVS.cso
+  ContextFactory.cpp
+  DeviceFactory.cpp
+  RenderPassManager.cpp
+  ResourceFactory.cpp
+  ShaderManager.cpp
+  WindowFactory.cpp
+  WindowHandle.cpp
+     Creating library D:\Documents\Ophidian\Repositories\EscapeLizards\Output\32-Bit\Release\RenderingNative.lib and object D:\Documents\Ophidian\Repositories\EscapeLizards\Output\32-Bit\Release\RenderingNative.exp
+  Generating code
+  Finished generating code
+  RenderingNative.vcxproj -> D:\Documents\Ophidian\Repositories\EscapeLizards\Output\32-Bit\Release\RenderingNative.dll

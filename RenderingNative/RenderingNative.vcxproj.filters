@@ -1,0 +1,220 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\Devices">
+      <UniqueIdentifier>{9638a14e-6449-488e-9369-4e684bcef224}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Devices">
+      <UniqueIdentifier>{058ba994-c6ad-4f71-8809-b0c1848cfc40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Windows">
+      <UniqueIdentifier>{78c21d02-4f9a-49e9-9e2f-2bab9a933261}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Windows">
+      <UniqueIdentifier>{0c06a615-c4a9-43c2-9f1b-1e79ee2719c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Resources">
+      <UniqueIdentifier>{adfc000c-f792-4ce1-83a0-985d3daba18c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Resources">
+      <UniqueIdentifier>{f1ecabf1-e10a-4a47-a94d-116d5f1f9833}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Pipeline">
+      <UniqueIdentifier>{92c42abe-d991-4c75-8561-2ebdb58a0447}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Pipeline">
+      <UniqueIdentifier>{5ade6d6d-78d1-4d36-abd2-44f58279e7b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Default Shaders">
+      <UniqueIdentifier>{82f84587-41f4-4f2c-9cfd-17832b5dc7ff}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="DeviceFactory.h">
+      <Filter>Header Files\Devices</Filter>
+    </ClInclude>
+    <ClInclude Include="GPUDesc.h">
+      <Filter>Header Files\Devices</Filter>
+    </ClInclude>
+    <ClInclude Include="GPUOutputDesc.h">
+      <Filter>Header Files\Devices</Filter>
+    </ClInclude>
+    <ClInclude Include="NativeOutputResolution.h">
+      <Filter>Header Files\Devices</Filter>
+    </ClInclude>
+    <ClInclude Include="ContextFactory.h">
+      <Filter>Header Files\Devices</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowFactory.h">
+      <Filter>Header Files\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceFactory.h">
+      <Filter>Header Files\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowHandle.h">
+      <Filter>Header Files\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="SubresourceBox.h">
+      <Filter>Header Files\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="InitialResourceDataDesc.h">
+      <Filter>Header Files\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowFullscreenState.h">
+      <Filter>Header Files\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderPassManager.h">
+      <Filter>Header Files\Pipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderManager.h">
+      <Filter>Header Files\Pipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderType.h">
+      <Filter>Header Files\Pipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="InputElementDesc.h">
+      <Filter>Header Files\Pipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderCommandInstruction.h">
+      <Filter>Header Files\Pipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderCommand.h">
+      <Filter>Header Files\Pipeline</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="DeviceFactory.cpp">
+      <Filter>Source Files\Devices</Filter>
+    </ClCompile>
+    <ClCompile Include="ContextFactory.cpp">
+      <Filter>Source Files\Devices</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowFactory.cpp">
+      <Filter>Source Files\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceFactory.cpp">
+      <Filter>Source Files\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowHandle.cpp">
+      <Filter>Source Files\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderPassManager.cpp">
+      <Filter>Source Files\Pipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderManager.cpp">
+      <Filter>Source Files\Pipeline</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="..\TestDir\Inst\Tests\SimpleVS.hlsl">
+      <Filter>Default Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\TestDir\Inst\Tests\SimpleFS.hlsl">
+      <Filter>Default Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\TestDir\Inst\Tests\UnlitFS.hlsl">
+      <Filter>Default Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\TestDir\Inst\Tests\UnlitVS.hlsl">
+      <Filter>Default Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\TestDir\Inst\DLGeometryFS.hlsl">
+      <Filter>Default Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\TestDir\Inst\DLGeometryVS.hlsl">
+      <Filter>Default Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\TestDir\Inst\DLLightingFS.hlsl">
+      <Filter>Default Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\TestDir\Inst\DLLightingVS.hlsl">
+      <Filter>Default Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\TestDir\Inst\UnlitVSSky.hlsl">
+      <Filter>Default Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\TestDir\Inst\HUDVS.hlsl">
+      <Filter>Default Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\TestDir\Inst\DLFinalFS.hlsl">
+      <Filter>Default Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\TestDir\Inst\Copy.hlsl">
+      <Filter>Default Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\TestDir\Inst\CopyReverse.hlsl">
+      <Filter>Default Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\TestDir\Inst\Outliner.hlsl">
+      <Filter>Default Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\TestDir\Inst\DLGeometryVSSky.hlsl">
+      <Filter>Default Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\TestDir\Inst\DLGeometryFSSky.hlsl">
+      <Filter>Default Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\TestDir\Inst\HUDFSText.hlsl">
+      <Filter>Default Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\TestDir\Inst\HUDFS.hlsl">
+      <Filter>Default Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\TestDir\Inst\Glow.hlsl">
+      <Filter>Default Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\TestDir\Inst\Blur.hlsl">
+      <Filter>Default Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\TestDir\Inst\DoF.hlsl">
+      <Filter>Default Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\TestDir\Inst\BloomH.hlsl">
+      <Filter>Default Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\TestDir\Inst\BloomV.hlsl">
+      <Filter>Default Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\TestDir\Inst\ShadowFS.hlsl">
+      <Filter>Default Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\TestDir\Inst\ShadowVS.hlsl">
+      <Filter>Default Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\TestDir\Inst\OutlinerNoop.hlsl">
+      <Filter>Default Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\TestDir\Inst\DLLightingFSBase.hlsl">
+      <Filter>Default Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="..\TestDir\Inst\DLLightingFSLights.hlsl">
+      <Filter>Default Shaders</Filter>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\TestDir\Inst\DLGeometryInclude.hlsli">
+      <Filter>Default Shaders</Filter>
+    </None>
+    <None Include="..\TestDir\Inst\DLLightingInclude.hlsli">
+      <Filter>Default Shaders</Filter>
+    </None>
+    <None Include="..\TestDir\Inst\HUDInclude.hlsli">
+      <Filter>Default Shaders</Filter>
+    </None>
+    <None Include="..\TestDir\Inst\BloomInclude.hlsli">
+      <Filter>Default Shaders</Filter>
+    </None>
+  </ItemGroup>
+</Project>
